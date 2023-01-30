@@ -88,14 +88,17 @@ let nameInputValue = commentName.value
    
     let blogContent = getStorage.find(x => x.id == name) 
 
+    
+
     blogContent.commentWords.push({
         id:blogContent.commentWords.length +1,
         articleId:name,
         commentvalue:commentValue,
-        nameValue:nameValue,
+        nameValue:nameValue
     })
     
     blogContent.comments +=1
+    
     const blogIndex = getStorage.findIndex(x => x.id == name)
 
     getStorage[blogIndex] = blogContent;
