@@ -6,88 +6,41 @@ adminOpen.addEventListener('click',(e)=>{
    })
 
 
-   //function deleteComment(id){
-
-   let params = (new URL(document.location)).searchParams;
-   let commentId = params.get('id')
-
-   let getStore ;
-   let token = localStorage.getItem("token")
-
-   //    function myDelete(id){
-   //       let commentIndex= getStore.findIndex(x => x._id == id)
-   //       // let getStore =JSON.parse(localStorage.getItem('blogValue'))
-
-   //       console.log(commentIndex, id)
-   //       axios.delete(`https://alexandre-nkurunziza.onrender.com/api/v1/comments/${id}`,{
-   //          headers:{
-   //            'Authorization': 'Bearer ' + token
-   //          }
-   //         })
-   //             .then((res)=>{
-   //              console.log("response", res)
-   //              getStore.splice(commentIndex,1)
-   //              window.location.reload()
-   //            })
-               
-   //             .catch((err)=>{console.log("error", err)})
-        
+   function deleteComment(id){
+      let  getStore= JSON.parse(localStorage.getItem('blogValues'))
          
-
-   //       //let commentIndex = getStore[blogIndex].commentValue.findIndex(x => x._id == id) 
-   //      // localStorage.setItem('blogValue', JSON.stringify(getStore))
-        
-   //    //      window.location.reload()
-   //    // let  getStore= JSON.parse(localStorage.getItem('blogValues'))
+      let index1 = getStore.commentWords.findIndex((obj) => obj.id === id)
       
-      
-   //    // for(let va of getStore){
-        
-   //    //    let index1 = va.commentWords.findIndex((obj) => obj.id === id)
-   //    //    va.commentWords.splice(index1, 1)   
-      
-   //    // }
-      
-   //    // localStorage.setItem('blogValues', JSON.stringify(getStore))
-   //    // window.location.reload() 
-      
-   //   console.log(token)
-     
-   // }
+      getStore.commentWords.splice(index1, 1)
+  
+      localStorage.setItem('blogValues', JSON.stringify(getStore))
+  
+      window.location.reload()  
+   }
 
    
   function showComment(){
     
-    
-    //let getStore =JSON.parse(localStorage.getItem('blogValues'))
-    //console.log(getStore)
-   //  let blogCont = getStore.find(x => x.id == name)
-   //  console.log(blogCont)
-    //let filteredComments = getStore.commentWords.filter(value => value.articleId === name)
-    
-   let commentAppend = document.getElementById('comment-message')
+    let getStore =JSON.parse(localStorage.getItem('blogValues'))
    
-   axios.get(`https://alexandre-nkurunziza.onrender.com/api/v1/blogs/${commentId}/comments`)
-   .then((res)=>{console.log("response", res)
-  }).catch((err)=>{console.log("error", err)})
+    let blogCont = getStore.find(x => x.id == name)
 
-
-  for(let valu of getStore){
-   // for(let val of valu.commentWords){
-      let div = document.createElement('div')
-      div.innerHTML = `
-      <h3>${valu.blog.title}</h3>
-      <p style=" color:blue;font-family:Arial">${valu.name}</p>
-      <p>${valu.comment}</p>
-       <button onclick=myDelete('${valu._id}')>Delete</button> `
-      // console.log(valu.blog)
-    commentAppend.appendChild(div)
-   // }
+    let filteredComments = getStore.commentWords.filter(value => value.articleId === name)
+    let commentAppend = document.getElementById('comment-message')
     
-  
-  
-} 
-    console.log("hello")
+
+  for(let valu of filteredComments) {
+   let div = document.createElement('div')
+
+       div.innerHTML = `
+       <h3>${blogCont.blogTitleInputValue}</h3>
+       <p>${valu.commentvalue}</p>
+        <button onclick=deleteComment(${valu.id})>Delete</button> 
+        
+   `
+    commentAppend.appendChild(div)
+  } 
+    
 
 
  }

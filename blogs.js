@@ -103,24 +103,19 @@ let nameInputValue = document.getElementById('comment-name').value
    
     // let getStorage =JSON.parse(localStorage.getItem('blogValues'))
    
-    // let blogContent = getStorage.find(x => x.id == name) 
+    let blogContent = getStorage.find(x => x.id == name) 
 
+    blogContent.commentWords.push({
+        id:blogContent.commentWords.length +1,
+        articleId:name,
+        commentvalue:commentValue,
+        nameValue:nameValue,
+    })
     
+    blogContent.comments +=1
+    const blogIndex = getStorage.findIndex(x => x.id == name)
 
-    // blogContent.commentWords.push({
-    //     id:blogContent.commentWords.length +1,
-    //     articleId:name,
-    //     commentvalue:commentValue,
-    //     nameValue:nameValue
-    // })
-    
-    // blogContent.comments +=1
-    
-    // const blogIndex = getStorage.findIndex(x => x.id == name)
-
-    // getStorage[blogIndex] = blogContent;
-    
-    // localStorage.setItem('blogValues', JSON.stringify(getStorage))
+    getStorage[blogIndex] = blogContent;
     
     const formData = 
     {
