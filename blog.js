@@ -59,7 +59,7 @@ async function takeBlogView(){
     // localStorage.setItem('blogValues', JSON.stringify(getBlogValue ))
   }
  
-  // takeBlogView()
+   takeBlogView()
 
 // let params = (new URL(document.location)).searchParams;
 // let name = params.get('id')
