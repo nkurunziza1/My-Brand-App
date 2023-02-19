@@ -69,16 +69,16 @@ contactBtn.addEventListener('click', ()=>{
  contactTextareaInputValue!==""
   ){
   
-    const storage = JSON.parse(localStorage.getItem('storeValue'))  || []
-    console.log('storage', storage)
+    // const storage = JSON.parse(localStorage.getItem('storeValue'))  || []
+    // console.log('storage', storage)
    
-    storage.push({
-        id: storage.length +1,
-        contactEmailInputValue:contactEmailInputValue,
-        contactNameInputValue :contactNameInputValue ,
-        contactTextareaInputValue:contactTextareaInputValue,
+    // storage.push({
+    //     id: storage.length +1,
+    //     contactEmailInputValue:contactEmailInputValue,
+    //     contactNameInputValue :contactNameInputValue ,
+    //     contactTextareaInputValue:contactTextareaInputValue,
         
-       })
+    //    })
        
    contactNameInput.style.borderColor = 'black';
    contactEmailInput.style.borderColor = 'black';
@@ -94,9 +94,20 @@ contactBtn.addEventListener('click', ()=>{
         textareaError.innerHTML ='';
       },3000)
 
-      let localStoreValue = localStorage.setItem('storeValue', JSON.stringify(storage))  
+      //let localStoreValue = localStorage.setItem('storeValue', JSON.stringify(storage))  
   }   
- 
+   console.log(contactNameInputValue)
+  const formData = 
+  {'name': contactNameInputValue,
+   'email': contactEmailInputValue,
+   'message': contactTextareaInputValue
+  }
+  
+  axios.post("https://alexandre-nkurunziza.onrender.com/api/v1/messages", formData,{
+    "Content-Type": "multipart/form-data"   
+   }).then(res =>{
+       console.log("response: ", res)
+   }).catch(console.log("hello"))
 
  
 

@@ -1,3 +1,7 @@
+ 
+ let blogIndex = blogValues.findIndex(x => x.id == editableBlog.id)
+ let editableBlog;
+ 
  function getEditableBlog(){
  const editableBlog=  JSON.parse(localStorage.getItem('editableBlog'))
  document.getElementById('blog-title').value= editableBlog.blogTitleInputValue;
@@ -8,20 +12,19 @@
 
 function saveBlog(){
 
-    let editableBlog = JSON.parse(localStorage.getItem('editableBlog'))
 
-    let blogValues = JSON.parse(localStorage.getItem('blogValues'))
-    let blogIndex = blogValues.findIndex(x => x.id == editableBlog.id)
+   axios.get(`https://alexandre-nkurunziza.onrender.com/api/v1/blogs/${blogIndex}`)
+   .then((error)=>{
     
-    console.log(blogIndex)
+   })
 
-    
+
   blogValues[blogIndex].blogTitleInputValue=document.getElementById('blog-title').value 
   blogValues[blogIndex].blogSummary=document.getElementById('blog-summary').value
   blogValues[blogIndex].blogContentValue = document.getElementById('blog-content').value
 
 
- localStorage.setItem('blogValues', JSON.stringify(blogValues)) 
+ //localStorage.setItem('blogValues', JSON.stringify(blogValues)) 
 
  document.getElementById('blog-title').value =''
  document.getElementById('blog-summary').value =''

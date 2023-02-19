@@ -25,7 +25,7 @@ let  signupPhoneError = document.getElementById('phone-error')
 let  signupPasswordError = document.getElementById('password-error')
 let  signupUsernameError = document.getElementById('username-error')
 
-function signup(e){
+async function signup(e){
 let  signupNameValue = signupName.value;
 let  signupEmailValue = signupEmail.value;
 let  signupPhoneValue = signupPhone.value;
@@ -119,14 +119,31 @@ phoneCheck.test(signupPhone.value) && signupPhoneValue!==""&&
 passwordCheck.test(signupPassword.value) && signupPasswordValue!==""&&
 usernameCheck.test(signupUsername.value) && signupUsernameValue!==""
 ){
+ 
+    let signupData = {
+     "name": signupNameValue,
+     "telephone": signupPhoneValue ,  
+     "email": signupEmailValue ,
+     "username": signupUsernameValue,
+     "password": signupPasswordValue, 
 
-    localStorage.setItem('signupEmail',signupEmailValue)
-    localStorage.setItem('signupPassword',signupPasswordValue)
+    }
+
+   await axios.post("https://alexandre-nkurunziza.onrender.com/api/v1/users", signupData)
+   .then((res)=>{
+    console.log("response", res)
+    window.location.href = "login.html";
+   }).catch((err)=>{console.log("error", err)})
+    
+
+    
+    
     signupName.value = '';
     signupEmail.value = '';
     signupPhone.value = '';
     signupPassword.value = '';
     signupUsername.value = '';
+    
 
     signupUsernameError.innerHTML ='Signup successful'
     signupUsernameError.style.color = 'green' 

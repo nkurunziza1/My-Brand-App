@@ -7,38 +7,47 @@ openMenu.addEventListener('click',function(){
 
 
   let params = (new URL(document.location)).searchParams;
-  let name = params.get('id')
+  let blogID = params.get('id')
   
   
-
-  const getStorage =JSON.parse(localStorage.getItem('blogValues')) ;
+  // const getStorage =JSON.parse(localStorage.getItem('blogValues')) ;
 
 // wibuke ko getStorage is an array
-const blogContent = getStorage.find(x => x.id == name)
+// const blogContent = getStorage.find(x => x.id == name)
 
-function takeBlogView(){
-    let blogDisplay = document.getElementById('blog-display')
+async function takeBlogView(){
+  let blogContent;
+
+  await axios.get(`https://alexandre-nkurunziza.onrender.com/api/v1/blogs/${blogID}`).then((res)=>{
+    console.log(res)
+    blogContent = res.data;
+
+  }).catch((error)=>{
+    console.log("Blog error: ", error);
+  })
+
+  let blogDisplay = document.getElementById('blog-display')
     
         blogDisplay.innerHTML = `
         <div class="single-blog" id="blog-display">
       
-        <h1><a href="">${blogContent.blogTitleInputValue}</a></h1>
-        <img src="${blogContent.blogImageTitle}"></img>
+        <h1><a href="">${blogContent.title}</a></h1>
+        <img src="${blogContent.image}"></img>
        <p>
-       ${blogContent.blogContentValue}
+       ${blogContent.content}
        </p>
       <div style='display:flex;'>
        <i><img src="/imge&icon/heart like.png" alt="" onclick ="like()"></i>
        <p style="display:flex" ><span style="color: red; margin-right: 5px; " >${blogContent.likes}</span>Likes</p>
        <i><img src="/imge&icon/chat comment.png" alt="" onclick ="like()"></i>
-       <p id="comments-number"><span style="color: red; margin-right: 5px;">${blogContent.comments}</span>Comments</p>
+       <p id="comments-number"><span style="color: red; margin-right: 5px;">${blogContent.commentCount}</span>Comments</p>
        </div>
        <input type="text" placeholder="Enter a name" id="comment-name" 
        class="comment-input"> <br>
        <input type="text" placeholder="Leave comment here" id="comment-input" 
        class="comment-input">
        <input type="submit" name="" value="submit" 
-       onclick='comment()' class="comment-submit" >
+       onclick='comment()' class="comment-submit">
         <div class="hold-comment" id="hold-comment">
       <h3>Review comments</h3>
      
@@ -52,99 +61,118 @@ let commentInput = document.getElementById('comment-input')
 let commentName = document.getElementById('comment-name')
 let commentSubmit = document.getElementById('comment-submit')
 
- function like(){
-    let params = (new URL(document.location)).searchParams;
-    let name = params.get('id')
+ async function like(){
+    // let params = (new URL(document.location)).searchParams;
+    // let name = params.get('id')
 
-    let getStorage =JSON.parse(localStorage.getItem('blogValues')) ;
+    // let getStorage =JSON.parse(localStorage.getItem('blogValues')) ;
 // wibuke ko getStorage is an array
-let blogContent = getStorage.find(x => x.id == name) 
-blogContent.likes +=1
+// let blogContent = getStorage.find(x => x.id == name)
 
-const blogIndex = getStorage.findIndex(x => x.id == name)
+const likes = { $inc: { likes: 1 } }
+            
 
-getStorage[blogIndex] = blogContent;
+axios.post(`https://alexandre-nkurunziza.onrender.com/api/v1/blogs/${blogID}/likes`, likes)
+.then((res =>{console.log(res.data)}))
+.catch((error)=>{console.log('error:' ,error)})
+ 
+// blogContent.likes +=1
 
-localStorage.setItem('blogValues', JSON.stringify(getStorage)) 
+// const blogIndex = getStorage.findIndex(x => x.id == name)
 
-window.location.reload()
+// getStorage[blogIndex] = blogContent;
+
+// localStorage.setItem('blogValues', JSON.stringify(getStorage)) 
+
+// window.location.reload()
 }
 
 
-function comment(){
-let commentInputValue = commentInput.value;
-let nameInputValue = commentName.value
+async function comment(){
+let commentInputValue = document.getElementById('comment-input').value;
+let nameInputValue = document.getElementById('comment-name').value
   if(commentInputValue === '' || nameInputValue==="")  {
     commentInput.style.borderColor = 'red'
     commentName.style.borderColor = 'red'
   }else{
-    let params = (new URL(document.location)).searchParams;
-    let name = params.get('id')
+    // let params = (new URL(document.location)).searchParams;
+    // let name = params.get('id')
     let commentValue = document.getElementById('comment-input').value;
     let nameValue = document.getElementById('comment-name').value;
     
    
-    let getStorage =JSON.parse(localStorage.getItem('blogValues'))
+    // let getStorage =JSON.parse(localStorage.getItem('blogValues'))
    
-    let blogContent = getStorage.find(x => x.id == name) 
+    // let blogContent = getStorage.find(x => x.id == name) 
 
     
 
-    blogContent.commentWords.push({
-        id:blogContent.commentWords.length +1,
-        articleId:name,
-        commentvalue:commentValue,
-        nameValue:nameValue
-    })
+    // blogContent.commentWords.push({
+    //     id:blogContent.commentWords.length +1,
+    //     articleId:name,
+    //     commentvalue:commentValue,
+    //     nameValue:nameValue
+    // })
     
-    blogContent.comments +=1
+    // blogContent.comments +=1
     
-    const blogIndex = getStorage.findIndex(x => x.id == name)
+    // const blogIndex = getStorage.findIndex(x => x.id == name)
 
-    getStorage[blogIndex] = blogContent;
+    // getStorage[blogIndex] = blogContent;
     
-    localStorage.setItem('blogValues', JSON.stringify(getStorage))
+    // localStorage.setItem('blogValues', JSON.stringify(getStorage))
     
-    commentInput.value="";
-    commentName.value="";
-    commentInput.style.borderColor = 'black'
-    commentName.style.borderColor='black'
+    const formData = 
+    {
+      "name": nameValue,
+      "comment":  commentValue
+    }
+    
+    axios.post(`https://alexandre-nkurunziza.onrender.com/api/v1/blogs/${blogID}/comments`, formData).then(res =>{
+         console.log("response: ", res)
+     }).catch((error)=>{
+      console.log("error :" ,error)
+     })
 
-    window.location.reload()
+    
   }
   
-
 }
 
-  function displayComment(){
-    let params = (new URL(document.location)).searchParams;
-    let name = params.get('id')
-    
-    let getStore =JSON.parse(localStorage.getItem('blogValues'))
-    let blogCont = getStore.find(x => x.id == name)
+  async function displayComment(){
+    // let getStore =JSON.parse(localStorage.getItem('blogValues'))
+    let commentsContents;
 
-    const filteredComments = blogCont.commentWords.filter(value => value.articleId === name)
+    await axios.get(`https://alexandre-nkurunziza.onrender.com/api/v1/blogs/${blogID}/comments`).then((res)=>{
+      commentsContents = res.data;
+    }).catch((error)=>{
+      console.log("Blog comments error: ", error);
+    })
 
     let commentAppend = document.getElementById('hold-comment')
 
 
-  for(let val of filteredComments){
+  index = 1
+  for(let val of commentsContents){
     let div = document.createElement('div')
    
-        div.innerHTML = `${val.id}.<span style="color:#000090; font-size:20px;">${val.nameValue}:</span>   <span style="opacity:70%; 
-         font-family:  Geneva, Verdana, sans-serif;">${val.commentvalue}</span>`
-         commentAppend.appendChild(div)
-  }  
-    
-  //   for(let valu of getStore){
-  
-  //     for(let val of valu.commentWords){
-       
-  //      
-   
-  //     }    
-  //  }
+    div.innerHTML = `${index}.<span style="color:#000090; font-size:20px;">${val.name}:</span>   <span style="opacity:70%; 
+         font-family:  Geneva, Verdana, sans-serif;">${val.comment}</span>`
+    commentAppend.appendChild(div)
+    index++;
+  }
 
-    }
+}
   
 displayComment()
+
+async function countComment(){
+  const commentsNumber = 0
+  await axios.get(`https://alexandre-nkurunziza.onrender.com/api/v1/blogs/${blogID}/comments`).then((res)=>{
+    commentsNumber = res.data.length;
+  }).catch((error)=>{
+    console.log("Blog comments error: ", error);
+  })
+
+  return commentsNumber
+}

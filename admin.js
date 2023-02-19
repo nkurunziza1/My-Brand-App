@@ -1,3 +1,5 @@
+// import axios from "axios"
+//const axios = require ("axios")
 
 // (,heightMax)
 // .editor.html.set('')
@@ -9,110 +11,139 @@
 // }
 // )
 
+let adminOpen = document.getElementById("admin-open");
+let adminContent = document.getElementById("admin-content");
+adminOpen.addEventListener("click", () => {
+  adminContent.classList.toggle("focus");
+});
+let adminBlogMessage = document.getElementById("admin-blog-message");
+let uploadImageBtn = document.getElementById("blog-upload-btn");
+let blogSubmitBtn = document.getElementById("admin-submit-button");
+let blogSummary = document.getElementById("blog-summaryInput");
+blogSubmitBtn.addEventListener("click", updateBlog);
 
+let blogImageChooseInput = document.getElementById("blog-imageChoose-input");
+let blogTitleInput = document.getElementById("blog-titleInput");
+let blogContent = document.getElementById("content");
 
-
-let adminOpen = document.getElementById('admin-open')
-let adminContent = document.getElementById('admin-content')
-adminOpen.addEventListener('click', () => {
-    adminContent.classList.toggle('focus')
-
-})
-let adminBlogMessage = document.getElementById('admin-blog-message')
-let uploadImageBtn = document.getElementById('blog-upload-btn')
-let blogSubmitBtn = document.getElementById('admin-submit-button')
-let blogSummary = document.getElementById('blog-summaryInput')
-blogSubmitBtn.addEventListener('click', updateBlog)
-
-let blogImageChooseInput = document.getElementById('blog-imageChoose-input')
-let blogTitleInput = document.getElementById('blog-titleInput')
-let blogContent = document.getElementById('content')
-
-
-
-const toBase64 = file => new Promise((resolve, reject) => {
+const toBase64 = (file) =>
+  new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-});
+    reader.onerror = (error) => reject(error);
+  });
 
-async function updateBlog() {
-    //    let blogImageChooseInputValue = blogImageChooseInput.value;
-    let blogTitleInputValue = blogTitleInput.value;
-    let blogContentValue = blogContent.value;
-    let blogSummaryValue = blogSummary.value
-    var uploadedImage = document.getElementById('blog-imageChoose-input').files[0]
+function updateBlog() {
+  //    let blogImageChooseInputValue = blogImageChooseInput.value;
+  let blogTitleInputValue = blogTitleInput.value;
+  let blogContentValue = blogContent.value;
+  let blogSummaryValue = blogSummary.value;
+  var uploadedImage = document.getElementById("blog-imageChoose-input")
+    .files[0];
 
+  // if (blogTitleInputValue === '') {
+  //     adminBlogMessage.innerHTML = '** you have forgot to fill Blog Title'
+  //     adminBlogMessage.style.color = 'red'
+  //     blogTitleInput.style.borderColor = 'red';
+  //     return
+  // } else {
 
-    if (blogTitleInputValue === '') {
-        adminBlogMessage.innerHTML = '** you have forgot to fill Blog Title'
-        adminBlogMessage.style.color = 'red'
-        blogTitleInput.style.borderColor = 'red';
-    } else {
+  //     blogTitleInput.style.borderColor = 'black';
+  //     adminBlogMessage.innerHTML = ''
+  // }
+  // if (blogSummaryValue === '') {
+  //     adminBlogMessage.innerHTML = '** you have forgot to fill Blog Title'
+  //     adminBlogMessage.style.color = 'red'
+  //     blogTitleInput.style.borderColor = 'red';
+  //     return
+  // } else {
 
-        blogTitleInput.style.borderColor = 'black';
-        adminBlogMessage.innerHTML = ''
-    }
-    if (blogSummaryValue === '') {
-        adminBlogMessage.innerHTML = '** you have forgot to fill Blog Title'
-        adminBlogMessage.style.color = 'red'
-        blogTitleInput.style.borderColor = 'red';
-    } else {
+  //     blogTitleInput.style.borderColor = 'black';
+  //     adminBlogMessage.innerHTML = ''
+  // }
+  // if (blogContentValue === '') {
+  //     adminBlogMessage.innerHTML = ' ** you have forgot to fill Blog content '
+  //     adminBlogMessage.style.color = 'red'
+  //     blogContent.style.borderColor = 'red';
+  //     return
+  // } else {
+  //     blogContent.style.borderColor = 'black';
+  //     adminBlogMessage.innerHTML = '';
+  // }
 
-        blogTitleInput.style.borderColor = 'black';
-        adminBlogMessage.innerHTML = ''
-    }
-    if (blogContentValue === '') {
-        adminBlogMessage.innerHTML = ' ** you have forgot to fill Blog content '
-        adminBlogMessage.style.color = 'red'
-        blogContent.style.borderColor = 'red';
-    } else {
-        blogContent.style.borderColor = 'black';
-        adminBlogMessage.innerHTML = '';
-    }
+  // if (!uploadedImage) {
 
+  //     adminBlogMessage.innerHTML = "** please upload image the space"
+  //     return
+  // }
 
-    if (!uploadedImage) {
+  if (
+    blogTitleInputValue === "" ||
+    !uploadedImage ||
+    blogContentValue === "" ||
+    blogSummaryValue === ""
+  ) {
+    adminBlogMessage.innerHTML = "** please fill the space";
+    adminBlogMessage.style.color = "red";
+    return;
+  } else {
+    // let storage = JSON.parse(localStorage.getItem('blogValues')) || [];
 
-        adminBlogMessage.innerHTML = "** please upload image the space"
-    }
+    // let params = (new URL(document.location)).searchParams;
+    // let name = params.get('id')
+    // storage.push({
+    //     id:storage.length +1,
+    //     blogTitleInputValue: blogTitleInputValue,
+    //     blogSummary:blogSummaryValue,
+    //     blogImageTitle: await toBase64(uploadedImage),
+    //     blogContentValue: blogContentValue,
+    //     blogDate: new Date().toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'}),
+    //     likes:0,
+    //     comments:0,
+    //     commentWords:[],
+    // })
 
-    if (blogTitleInputValue === '' ||
-        !uploadedImage || blogContentValue === ''|| blogSummaryValue === '')    {
-        adminBlogMessage.innerHTML = "** please fill the space"
-    } else {
+    // console.log(storage)
+    adminBlogMessage.innerHTML = "You already create blog";
+    adminBlogMessage.style.color = "green";
 
-        blogTitleInput.style.borderColor = 'black';
-        blogContent.style.borderColor = 'black';
-        blogTitleInput.value = "";
-        blogSummary.value="";
-        blogContent.value = "";
-        blogImageChooseInput.value = "";
-        editor.html.set('')
+    let formData = new FormData();
 
-        let storage = JSON.parse(localStorage.getItem('blogValues')) || [];
+    formData.append("title", blogTitleInputValue);
+    formData.append("summary", blogSummaryValue);
+    formData.append("content", blogContentValue);
+    formData.append("image", uploadedImage);
+    formData.append("createdAt" , new Date().toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'}))
+    
+    const token = localStorage.getItem("token") 
 
-        let params = (new URL(document.location)).searchParams;
-        let name = params.get('id')
-        storage.push({
-            id:storage.length +1,
-            blogTitleInputValue: blogTitleInputValue,
-            blogSummary:blogSummaryValue,
-            blogImageTitle: await toBase64(uploadedImage),
-            blogContentValue: blogContentValue,
-            blogDate: new Date().toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'}),
-            likes:0,
-            comments:0,
-            commentWords:[],  
-        })
-        
-        console.log(storage)
-        adminBlogMessage.innerHTML = 'You already create blog'
-        adminBlogMessage.style.color = 'green'
-        setTimeout(function blogMessage() {
-            adminBlogMessage.innerHTML = ''
-        }, 3000)
-        let storageValue = localStorage.setItem('blogValues', JSON.stringify(storage))
-    }
+   
+    
+    axios.post("https://alexandre-nkurunziza.onrender.com/api/v1/blogs",
+    
+    // {
+          
+    //   headers: {
+    //         Authorization: "Bearer " + token,
+    //           }
+    //      },
+
+    formData,{
+        "Content-Type": "multipart/form-data",
+      })
+      .then((res) => {
+        console.log("response: ", res);
+      })
+      .catch(console.log("hello"));
+
+    blogTitleInput.style.borderColor = "black";
+    blogContent.style.borderColor = "black";
+    adminBlogMessage.innerHTML = "";
+    blogTitleInput.value = "";
+    blogSummary.value = "";
+    blogContent.value = "";
+    blogImageChooseInput.value = "";
+    editor.html.set("");
+  }
 }

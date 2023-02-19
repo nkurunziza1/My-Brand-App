@@ -1,58 +1,81 @@
-let adminOpen = document.getElementById('admin-open')
-let adminContent = document.getElementById('admin-content')
-adminOpen.addEventListener('click', () => {
-    adminContent.classList.toggle('focus')
+let adminOpen = document.getElementById("admin-open");
+let adminContent = document.getElementById("admin-content");
+adminOpen.addEventListener("click", () => {
+  adminContent.classList.toggle("focus");
+});
 
-})
+let getBlogValue;
 
+function deleteList(id) {
+//   let getBlogValue = JSON.parse(localStorage.getItem("blogValues"));
+//   console.log(getBlogValue);
+  const index = getBlogValue.findIndex((obj) => obj._id === id);
+  console.log(index,id)
+  const token = localStorage.getItem("token")
+// login flow
+// call login api
+// keep the token in localstorage
+// use token in headers to access protected
+  axios
+    .delete(`https://alexandre-nkurunziza.onrender.com/api/v1/blogs/${id}`,{
+     headers:{
+        'Authorization': 'Bearer ' + token
+     }
+    })
+    .then((res) => {
+      console.log("response", res);
 
-function deleteList(id){
-    let getBlogValue = JSON.parse(localStorage.getItem('blogValues'))
-    console.log(getBlogValue)
-    const index = getBlogValue.findIndex((obj) => obj.id === id)
-    
-    getBlogValue.splice(index, 1)
+      getBlogValue.splice(index, 1);
 
-    localStorage.setItem('blogValues', JSON.stringify(getBlogValue))
+      // localStorage.setItem("blogValues", JSON.stringify(getBlogValue));
 
-    window.location.reload()
+      window.location.reload();
+    })
+    .catch((err) => {
+      console.log("error", err);
+    });
 }
 
-function editBlog(id){
-    let blogValues = JSON.parse(localStorage.getItem('blogValues'))
-    
-    const index = blogValues.findIndex((obj) => obj.id === id)
+function editBlog(id) {
 
-    
-    blogValues[index]
 
-    localStorage.setItem('editableBlog', JSON.stringify(blogValues[index]))
+  const index = getBlogValue.findIndex((obj) => obj._id === id);
 
-   window.location.href='edit.html' 
+  getBlogValue[index];
+  
+  console.log(getBlogValue)
+
+  // window.location.href = "edit.html";
 }
 
+async function getValue() {
+  let messageTable = document.getElementById("message-table");
+  //let getBlogValue = JSON.parse(localStorage.getItem('blogValues'))
 
+  await axios
+    .get("https://alexandre-nkurunziza.onrender.com/api/v1/blogs")
+    .then((res) => {
+      console.log("response", res.data.blog);
+      getBlogValue = res.data.blog;
+    })
+    .catch((err) => {
+      console.log("error", err);
+    });
 
+  console.log("hello");
 
-function getValue(){
-    let messageTable = document.getElementById('message-table')
-    let getBlogValue = JSON.parse(localStorage.getItem('blogValues'))
-    
-    console.log('hello')
-
-    for (const value of getBlogValue) {
-        let tableRow = document.createElement('tr')
-        tableRow.innerHTML = `<td> ${value.blogTitleInputValue}</td>
-        <td> ${value.blogDate}</td>
+  for (const value of getBlogValue) {
+    let tableRow = document.createElement("tr");
+    tableRow.innerHTML = `<td> ${value.title}</td>
+        <td> ${value.createAt}</td>
         
         <td>
-        <button onclick ="editBlog(${value.id})">Edit</button>
-        <button onclick ="deleteList(${value.id})">Delete</button>
+        <button onclick ="editBlog('${value._id}')">Edit</button>
+        <button onclick ="deleteList('${value._id}')">Delete</button>
         </td>
        
-        `
-        messageTable.appendChild(tableRow)
-
-    }  
+        `;
+    messageTable.appendChild(tableRow);
   }
-  getValue()
+}
+getValue();

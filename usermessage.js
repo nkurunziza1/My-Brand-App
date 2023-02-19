@@ -19,44 +19,63 @@ adminOpen.addEventListener('click',(e)=>{
     e.preventDefault()   
    })
 
-function deleteList(id){
-    let getContactValue = JSON.parse(localStorage.getItem('storeValue'))
-    console.log(getContactValue)
-    const index = getContactValue.findIndex((obj) => obj.id === id)
+   let  getContactValue;
+   
+
+  
+
+// clearAllBtn.addEventListener('click',()=>{
+//     let getContactValue = JSON.parse(localStorage.getItem('storeValue'))
     
-    getContactValue.splice(index, 1)
+//     localStorage.clear(getContactValue)
 
-    localStorage.setItem('storeValue', JSON.stringify(getContactValue))
+//     window.location.reload()
 
-    window.location.reload()
-}
-
-clearAllBtn.addEventListener('click',()=>{
-    let getContactValue = JSON.parse(localStorage.getItem('storeValue'))
-    
-    localStorage.clear(getContactValue)
-
-    window.location.reload()
-
-})
+// })
 
 
-function getValue(){
+ async function getValue(){
     let messageTable = document.getElementById('message-table')
-    let getContactValue = JSON.parse(localStorage.getItem('storeValue'))
+    // let getContactValue = JSON.parse(localStorage.getItem('storeValue'))
+    await axios.get("https://alexandre-nkurunziza.onrender.com/api/v1/messages")
+    .then((res)=>{
+        console.log("response", res)
+        getContactValue = res.data;
+    }).catch((err)=>{console.log("error", err)})
+
     
     console.log('hello')
 
     for (const value of getContactValue) {
         let tableRow = document.createElement('tr')
-        tableRow.innerHTML = `<td>  ${value.contactNameInputValue}</td>
-        <td> ${value.contactEmailInputValue}</td>
-        <td>${value.contactTextareaInputValue}</td> 
-        <td><button onclick ="deleteList(${value.id})">Delete</button></td>`
+        tableRow.innerHTML = `<td>  ${value.name}</td>
+        <td> ${value.email}</td>
+        <td>${value.message}</td> 
+        <td><button onclick ="deleteList('${value._id}')">Delete</button></td>`
         messageTable.appendChild(tableRow)
-
+        
     }  
   }
  
+  let token = localStorage.getItem("token")
+  function deleteList(id){
+    const contactId = getContactValue.findIndex((obj) => obj._id === id)
+   console.log(contactId)
+
+    axios.delete(`https://alexandre-nkurunziza.onrender.com/api/v1/messages/${id}`,{
+    headers:{
+      'Authorization': 'Bearer ' + token
+    }
+   })
+       .then((res)=>{
+        console.log("response", res)
+        getContactValue.slice(contactId, 1)
+        window.location.reload()
+      })
+       
+       .catch((err)=>{console.log("error", err)})
+   
+      
+    }
 getValue()
 

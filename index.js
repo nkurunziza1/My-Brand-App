@@ -7,30 +7,39 @@ let menu = document.getElementById('menu')
 openMenu.addEventListener('click',function(){
     menu.classList.toggle('active')  
 })
-function getMainArticles(){
+let getBlogValue;
+async function getMainArticles(){
 
-    let mainArticles  = document.getElementById('main-articles')
-let getBlogValue = JSON.parse(localStorage.getItem('blogValues'))
-for(let i =0; i<3; i++){
-    if(getBlogValue === ""){
-     return false
-    }else{
+let mainArticles  = document.getElementById('main-articles')
+// let getBlogValue = JSON.parse(localStorage.getItem('blogValues'))
+
+
+await axios.get("https://alexandre-nkurunziza.onrender.com/api/v1/blogs")
+    .then((res)=>{
+        console.log("response", res)
+      getBlogValue = res.data
+    }).catch((err)=>{
+      console.log("error:", err)
+    })
+
+while(getBlogValue < 3){
+    
         let mainHOld = document.createElement('div')
         mainHOld.className = "classic";
-      console.log(getBlogValue[i])
+      console.log(getBlogValue)
         mainHOld.innerHTML =`
         
-        <a href="alborton.html?id= ${getBlogValue[i].id}">${getBlogValue[i].blogTitleInputValue}</a>
-        <img src="${getBlogValue[i].blogImageTitle}" alt=""">
-        <p>${getBlogValue[i].blogSummary}</p>
+        <a href="alborton.html?id= '${getBlogValue._id}'">${getBlogValue.title}</a>
+        <img src="${getBlogValue.image}" alt=""">
+        <p>${getBlogValue.summary}</p>
         <div class="like-comment-share">
             <img src="/imge&icon/hand like.png" alt="">
             <img src="/imge&icon/chat comment.png" alt="" id="comment-btn">
             <!-- <img src="/imge&icon/share icon.png" alt=""> -->
         </div>
         <div class="like-share-comment-p">
-            <p><span style="color: red; margin-right: 5px;">${getBlogValue[i].likes}</span>Likes</p>
-            <p><span style="color: red; margin-right: 5px;">${getBlogValue[i].comments}</span>Comment</p>
+            <p><span style="color: red; margin-right: 5px;">${getBlogValue.likes}</span>Likes</p>
+            <p><span style="color: red; margin-right: 5px;">${getBlogValue.comments}</span>Comment</p>
             <!-- <p><span style="color: red; margin-right: 5px;">12</span>Share</p> -->
       
        
@@ -40,7 +49,7 @@ for(let i =0; i<3; i++){
   
  
 }
-}
+
 
 
 getMainArticles()
