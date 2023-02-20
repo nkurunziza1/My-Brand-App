@@ -120,7 +120,7 @@ function updateBlog() {
 
    
     
-    axios.post("https://alexandre-nkurunziza.onrender.com/api/v1/blogs",
+    axios.post("https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs",
     
     // {
           

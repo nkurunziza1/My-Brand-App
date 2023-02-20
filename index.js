@@ -14,7 +14,7 @@ let mainArticles  = document.getElementById('main-articles')
 // let getBlogValue = JSON.parse(localStorage.getItem('blogValues'))
 
 
-await axios.get("https://alexandre-nkurunziza.onrender.com/api/v1/blogs")
+await axios.get("https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs")
     .then((res)=>{
         console.log("response", res)
       getBlogValue = res.data

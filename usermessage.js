@@ -37,7 +37,7 @@ adminOpen.addEventListener('click',(e)=>{
  async function getValue(){
     let messageTable = document.getElementById('message-table')
     // let getContactValue = JSON.parse(localStorage.getItem('storeValue'))
-    await axios.get("https://alexandre-nkurunziza.onrender.com/api/v1/messages")
+    await axios.get("https://sparkling-petticoat-bull.cyclic.app/api/v1/messages")
     .then((res)=>{
         console.log("response", res)
         getContactValue = res.data;
@@ -62,7 +62,7 @@ adminOpen.addEventListener('click',(e)=>{
     const contactId = getContactValue.findIndex((obj) => obj._id === id)
    console.log(contactId)
 
-    axios.delete(`https://alexandre-nkurunziza.onrender.com/api/v1/messages/${id}`,{
+    axios.delete(`https://sparkling-petticoat-bull.cyclic.app/api/v1/messages/${id}`,{
     headers:{
       'Authorization': 'Bearer ' + token
     }

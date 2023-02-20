@@ -17,7 +17,7 @@ function deleteList(id) {
 // keep the token in localstorage
 // use token in headers to access protected
   axios
-    .delete(`https://alexandre-nkurunziza.onrender.com/api/v1/blogs/${id}`,{
+    .delete(`https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs/${id}`,{
      headers:{
         'Authorization': 'Bearer ' + token
      }
@@ -36,16 +36,54 @@ function deleteList(id) {
     });
 }
 
-function editBlog(id) {
+function editBlog(id){
 
 
-  const index = getBlogValue.findIndex((obj) => obj._id === id);
+  localStorage.setItem('id', JSON.stringify(id))
 
-  getBlogValue[index];
+  // let blogValues = JSON.parse(localStorage.getItem('blogValues'))
+    
+  // const index = blogValues.findIndex((obj) => obj.id === id)
+
   
-  console.log(getBlogValue)
+  // blogValues[index]
 
-  // window.location.href = "edit.html";
+  // localStorage.setItem('editableBlog', JSON.stringify(blogValues[index]))
+
+  // window.location.href='edit.html' 
+  
+    // let getBlogValue = JSON.parse(localStorage.getItem('blogValues'))
+    // console.log(getBlogValue)
+    // const index = getBlogValue.findIndex((obj) => obj.id === id)
+    
+    // getBlogValue.splice(index, 1)
+    
+    // localStorage.setItem('blogValues', JSON.stringify(getBlogValue))
+
+    // window.location.reload()
+    window.location.href='edit.html' 
+  // const index = getBlogValue.findIndex((obj) => obj._id === id);
+  // console.log(index,id)
+  // const token = localStorage.getItem("token")
+
+  // axios
+  //   .patch(`https://alexandre-nkurunziza.onrender.com/api/v1/blogs/${id}`,{
+  //    headers:{
+  //       'Authorization': 'Bearer ' + token
+  //    }
+  //   })
+  //   .then((res) => {
+  //     console.log("response", res);
+
+  //     // getBlogValue.splice(index, 1);
+
+  //     // localStorage.setItem("blogValues", JSON.stringify(getBlogValue));
+
+  //     window.location.reload();
+  //   })
+  //   .catch((err) => {
+  //     console.log("error", err);
+  //   });
 }
 
 async function getValue() {
@@ -53,7 +91,7 @@ async function getValue() {
   //let getBlogValue = JSON.parse(localStorage.getItem('blogValues'))
 
   await axios
-    .get("https://alexandre-nkurunziza.onrender.com/api/v1/blogs")
+    .get("https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs")
     .then((res) => {
       console.log("response", res.data.blog);
       getBlogValue = res.data.blog;

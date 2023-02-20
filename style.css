@@ -11,6 +11,7 @@
   .open{
   display:none ;
   }
+  
   .main-content{
     display: flex;
     justify-content: space-between;

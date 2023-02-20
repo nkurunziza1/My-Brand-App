@@ -103,7 +103,7 @@ contactBtn.addEventListener('click', ()=>{
    'message': contactTextareaInputValue
   }
   
-  axios.post("https://alexandre-nkurunziza.onrender.com/api/v1/messages", formData,{
+  axios.post("https://sparkling-petticoat-bull.cyclic.app/api/v1/messages", formData,{
     "Content-Type": "multipart/form-data"   
    }).then(res =>{
        console.log("response: ", res)

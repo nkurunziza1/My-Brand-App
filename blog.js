@@ -18,7 +18,7 @@ async function takeBlogView(){
     loadinghold.append(loadingText)
     
     // let getBlogValue;
-    await axios.get("https://alexandre-nkurunziza.onrender.com/api/v1/blogs").then((res)=>{
+    await axios.get("https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs").then((res)=>{
       getBlogValue = res.data.blog
     }).catch((err)=>{
       console.log("error:", err)

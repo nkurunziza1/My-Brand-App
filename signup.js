@@ -129,10 +129,10 @@ usernameCheck.test(signupUsername.value) && signupUsernameValue!==""
 
     }
 
-   await axios.post("https://alexandre-nkurunziza.onrender.com/api/v1/users", signupData)
+   await axios.post("https://sparkling-petticoat-bull.cyclic.app/api/v1/users", signupData)
    .then((res)=>{
     console.log("response", res)
-    window.location.href = "login.html";
+    window.location.href = "https://sparkling-petticoat-bull.cyclic.app/api/v1/users";
    }).catch((err)=>{console.log("error", err)})
     
 

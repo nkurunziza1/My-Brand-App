@@ -36,7 +36,7 @@ async function login(){
 }
 let getSignupEmail;
 let getSignupPassword;
- await axios.get("https://alexandre-nkurunziza.onrender.com/api/v1/users")
+ await axios.get("https://sparkling-petticoat-bull.cyclic.app/api/v1/users")
 .then((res)=>{
 
     for(let value of res.data){
@@ -62,7 +62,7 @@ if(loginEmailValue === getSignupEmail ||
 
   }
 
-  axios.post("https://alexandre-nkurunziza.onrender.com/api/v1/auth/login", 
+  axios.post("https://sparkling-petticoat-bull.cyclic.app/api/v1/auth/login", 
  loginData
  ).then((res)=>{
   console.log("response", res)
