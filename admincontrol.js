@@ -79,7 +79,7 @@ function editBlog(id){
 
   //     // localStorage.setItem("blogValues", JSON.stringify(getBlogValue));
 
-  //     window.location.reload();
+  //    
   //   })
   //   .catch((err) => {
   //     console.log("error", err);
@@ -105,10 +105,10 @@ async function getValue() {
   for (const value of getBlogValue) {
     let tableRow = document.createElement("tr");
     tableRow.innerHTML = `<td> ${value.title}</td>
-        <td> ${value.createAt}</td>
+        <td> ${value.createdAt}</td>
         
         <td>
-        <button onclick ="editBlog('${value._id}')">Edit</button>
+        <button onclick ="editBlog('${value._id}')" style ="background:#008CBA;">Edit</button>
         <button onclick ="deleteList('${value._id}')">Delete</button>
         </td>
        

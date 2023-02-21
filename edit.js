@@ -27,17 +27,20 @@ function saveBlog(){
    const title =document.getElementById('blog-title').value  
    const summary =document.getElementById('blog-summary').value
    const content =document.getElementById('blog-content').value
+
+   const updatedValues = {
+      "title": title,
+      "summary": summary,
+      "content": content
+   }
    
-   axios.patch(`https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs/${blogId}` ,{
+   axios.patch(`https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs/${blogId}` ,updatedValues,{
    headers:{
       'Authorization': 'Bearer ' + token
       }
     })
    .then((res)=>{
     console.log("reponse", res)
-    summary,
-    content,
-    title
    }).catch((err)=>{
       console.log("error", err)
    })

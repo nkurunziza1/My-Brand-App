@@ -22,6 +22,7 @@ adminOpen.addEventListener('click',(e)=>{
       .then((res)=>{
         console.log("response", res)
         getStore.splice(index1, 1)
+        window.location.reload();
       }).catch((err)=>{
         console.log("error", err)
       })
@@ -34,7 +35,7 @@ adminOpen.addEventListener('click',(e)=>{
       // window.location.reload()  
    }
 
-   let blog
+   let getSt
   async function showComment(){
     
     // let getStore =JSON.parse(localStorage.getItem('blogValues'))
@@ -43,8 +44,9 @@ adminOpen.addEventListener('click',(e)=>{
     await axios.get(`https://sparkling-petticoat-bull.cyclic.app/api/v1/comments`)
     .then((res)=>{
       console.log("response" ,res)
-      getStore=res.data;
-      console.log(blog)
+      getStore = res.data;
+       console.log(getStore.length)
+      
     }).catch((err)=>{
       console.log("error", err)
      })
@@ -55,20 +57,22 @@ adminOpen.addEventListener('click',(e)=>{
     
 
   for(let valu of getStore) {
-   let div = document.createElement('div')
-   
+    console.log(valu.title)
+    
+      let div = document.createElement('div')
+     
        div.innerHTML = `
-       <h3>${valu}</h3>
+       <h3>${valu.blog.title}</h3>
        <p>${valu.name}</p>
        <p>${valu.comment}</p>
         <button onclick=deleteComment('${valu._id}')>Delete</button> 
-        
-   `
-    commentAppend.appendChild(div)
+        `
+        commentAppend.appendChild(div)
+    }
+   
+   
+    
   } 
     
-
-
- }
 
 showComment()

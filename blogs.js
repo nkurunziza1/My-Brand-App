@@ -75,7 +75,10 @@ const likes = { $inc: { likes: 1 } }
             
 
 axios.post(`https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs/${blogID}/likes`, likes)
-.then((res =>{console.log(res.data)}))
+.then((res) =>{
+  console.log(res.data)
+  window.location.reload()
+})
 .catch((error)=>{console.log('error:' ,error)})
  
 // blogContent.likes +=1
@@ -126,12 +129,13 @@ function comment(){
     
     const formData = 
     {
-      "name": nameValue,
-      "comment":  commentValue
+      "name": nameInputValue,
+      "comment":  commentInputValue
     }
     
     axios.post(`https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs/${blogID}/comments`, formData).then(res =>{
          console.log("response: ", res)
+         window.location.reload()
      }).catch((error)=>{
       console.log("error :" ,error)
      })
@@ -141,6 +145,7 @@ function comment(){
      
     
   }
+  
   
 }
 

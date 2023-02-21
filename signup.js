@@ -132,8 +132,22 @@ usernameCheck.test(signupUsername.value) && signupUsernameValue!==""
    await axios.post("https://sparkling-petticoat-bull.cyclic.app/api/v1/users", signupData)
    .then((res)=>{
     console.log("response", res)
-    window.location.href = "https://sparkling-petticoat-bull.cyclic.app/api/v1/users";
-   }).catch((err)=>{console.log("error", err)})
+    signupUsernameError.innerHTML ='Signup successful'
+    signupUsernameError.style.color = 'green' 
+    setTimeout(function removeSuccess(){
+        signupUsernameError.innerHTML ='';
+    },3000)
+    window.location.href = "login.html";
+   }).catch((err)=>{
+    console.log("error", err)
+    
+    signupUsernameError.innerHTML = err.response.data.message
+    signupUsernameError.style.color = 'red'
+    setTimeout(function removeSuccess(){
+        signupUsernameError.innerHTML ='';
+    },5000)
+
+})
     
 
     
@@ -145,11 +159,7 @@ usernameCheck.test(signupUsername.value) && signupUsernameValue!==""
     signupUsername.value = '';
     
 
-    signupUsernameError.innerHTML ='Signup successful'
-    signupUsernameError.style.color = 'green' 
-    setTimeout(function removeSuccess(){
-        signupUsernameError.innerHTML ='';
-    },3000)
+   
     
 }
 }

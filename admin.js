@@ -135,7 +135,9 @@ function updateBlog() {
       .then((res) => {
         console.log("response: ", res);
       })
-      .catch(console.log("hello"));
+      .catch((err)=>{
+        console.lo
+      });
 
     blogTitleInput.style.borderColor = "black";
     blogContent.style.borderColor = "black";

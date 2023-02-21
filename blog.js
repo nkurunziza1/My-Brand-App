@@ -49,6 +49,7 @@ async function takeBlogView(){
             <!-- <p><span style="color: red; margin-right: 5px;">12</span>Share</p> -->
         </div>   
         `
+        console.log(value.commentCount)
         
         blogBlock.appendChild(blogHold)
        
