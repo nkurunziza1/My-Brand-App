@@ -34,11 +34,12 @@ function saveBlog(){
       "content": content
    }
    
-   axios.patch(`https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs/${blogId}` ,updatedValues,{
-   headers:{
-      'Authorization': 'Bearer ' + token
-      }
-    })
+   axios.patch(`https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs/${blogId}` ,updatedValues
+   // headers:{
+   //    'Authorization': 'Bearer' + token
+   //    }
+   //  }
+    )
    .then((res)=>{
     console.log("reponse", res)
    }).catch((err)=>{
