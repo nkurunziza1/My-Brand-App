@@ -27,31 +27,35 @@ function saveBlog(){
    const title =document.getElementById('blog-title').value  
    const summary =document.getElementById('blog-summary').value
    const content =document.getElementById('blog-content').value
-
+   console.log(title)
    const updatedValues = {
       "title": title,
       "summary": summary,
-      "content": content
+      "content": content,
    }
    
-   axios.patch(`https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs/${blogId}` ,updatedValues
-   // headers:{
-   //    'Authorization': 'Bearer' + token
-   //    }
-   //  }
+   axios.patch(`https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs/${blogId}` ,updatedValues,
+   {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+      }
     )
    .then((res)=>{
     console.log("reponse", res)
+    document.getElementById('blog-title').value =''
+    document.getElementById('blog-summary').value =''
+    editor.html.set('')
    }).catch((err)=>{
       console.log("error", err)
+      alert(err.response.data)
+      
    })
 
   
 
 
- document.getElementById('blog-title').value =''
- document.getElementById('blog-summary').value =''
- editor.html.set('')
+ 
 
 
 

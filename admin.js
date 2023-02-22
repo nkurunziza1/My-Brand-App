@@ -105,9 +105,7 @@ function updateBlog() {
     // })
 
     // console.log(storage)
-    adminBlogMessage.innerHTML = "You already create blog";
-    adminBlogMessage.style.color = "green";
-
+    
     let formData = new FormData();
 
     formData.append("title", blogTitleInputValue);
@@ -121,31 +119,38 @@ function updateBlog() {
    
     
     axios.post("https://sparkling-petticoat-bull.cyclic.app/api/v1/blogs",
-    
-    // {
-          
-    //   headers: {
-    //         Authorization: "Bearer " + token,
-    //           }
-    //      },
-
     formData,{
+      headers: {
         "Content-Type": "multipart/form-data",
+        'Authorization': `Bearer ${token}`,
+      }
       })
       .then((res) => {
+
+        adminBlogMessage.innerHTML = "You already create blog";
+        adminBlogMessage.style.color = "green";
+
         console.log("response: ", res);
+        blogTitleInput.style.borderColor = "black";
+        blogContent.style.borderColor = "black";
+        adminBlogMessage.innerHTML = "";
+        blogTitleInput.value = "";
+        blogSummary.value = "";
+        blogContent.value = "";
+        blogImageChooseInput.value = "";
+        editor.html.set("");
       })
       .catch((err)=>{
-        console.lo
+        console.log("error", err)
+        adminBlogMessage.innerHTML = err.response.data;
+        adminBlogMessage.style.color = "red";
+        setTimeout(()=>{
+          
+          adminBlogMessage.innerHTML= ""
+          
+        },3000)
       });
 
-    blogTitleInput.style.borderColor = "black";
-    blogContent.style.borderColor = "black";
-    adminBlogMessage.innerHTML = "";
-    blogTitleInput.value = "";
-    blogSummary.value = "";
-    blogContent.value = "";
-    blogImageChooseInput.value = "";
-    editor.html.set("");
+    
   }
 }

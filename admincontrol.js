@@ -1,5 +1,6 @@
 let adminOpen = document.getElementById("admin-open");
 let adminContent = document.getElementById("admin-content");
+let adminBlogMessage = document.getElementById("admin-blog-message")
 adminOpen.addEventListener("click", () => {
   adminContent.classList.toggle("focus");
 });
@@ -33,6 +34,13 @@ function deleteList(id) {
     })
     .catch((err) => {
       console.log("error", err);
+      adminBlogMessage.innerHTML = err.response.data;
+      adminBlogMessage.style.color = 'red'
+
+      setTimeout(()=>{
+        adminBlogMessage.innerHTML= ""
+      },3000)
+      
     });
 }
 
@@ -96,11 +104,15 @@ async function getValue() {
       console.log("response", res.data.blog);
       getBlogValue = res.data.blog;
     })
-    .catch((err) => {
+    .catch((err)=> {
       console.log("error", err);
+      
+      
+      
+      console.log("hello");
     });
 
-  console.log("hello");
+    
 
   for (const value of getBlogValue) {
     let tableRow = document.createElement("tr");
@@ -108,8 +120,8 @@ async function getValue() {
         <td> ${value.createdAt}</td>
         
         <td>
-        <button onclick ="editBlog('${value._id}')" style ="background:#008CBA;">Edit</button>
-        <button onclick ="deleteList('${value._id}')">Delete</button>
+        <button onclick ="editBlog('${value._id}')" style ="background:#008CBA;" class="edit-btn">Edit</button>
+        <button onclick ="deleteList('${value._id}')" class = "delete-btn">Delete</button>
         </td>
        
         `;

@@ -1138,6 +1138,33 @@ text-decoration: underline;
   border-radius: 3px;
   width: 60%;
 }
+.edit-btn{
+  background: blueviolet;
+  color: white;
+  padding: 5px 15px 5px 15px ;
+  border-radius: 2px;
+  margin-right: 4px;
+  margin-bottom: 5px;
+  width: 50%;
+  border:none;
+  font-size: 15px;
+
+
+}
+.delete-btn{
+  background: rgb(244, 7, 7);
+  color: white;
+  padding: 5px 15px 5px 15px ;
+  border-radius: 2px;
+  margin-right: 4px;
+  border:none;
+  width: 50%;
+  font-size: 15px;
+}
+.Edit-delet-btn{
+margin-top: 4px;
+width: 20%;
+}
 .intro-paragraph p{
 width:70%;
 font-size: 15px;
